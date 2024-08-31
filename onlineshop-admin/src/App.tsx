@@ -1,5 +1,21 @@
+import { useEffect, useState } from 'react'
+import { Loader } from './components/common'
+import MainLayout from './layouts/MainLayout'
+
 function App() {
-  return <h1 className='text-3xl font-bold underline'>OnlineShop - Admin</h1>
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000)
+  }, [])
+
+  return loading ? (
+    <Loader />
+  ) : (
+    <MainLayout>
+      <h1>Hello World</h1>
+    </MainLayout>
+  )
 }
 
 export default App
