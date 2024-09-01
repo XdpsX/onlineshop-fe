@@ -12,9 +12,6 @@ export default {
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"]
       },
-      colors: {
-        primary: "#1c7ed6"
-      },
       zIndex: {
         999999: '999999',
         99999: '99999',

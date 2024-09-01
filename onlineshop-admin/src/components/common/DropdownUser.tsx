@@ -25,7 +25,7 @@ const DropdownUser = () => {
       {/* <!-- Dropdown Start --> */}
       {dropdownOpen && (
         <div className={`absolute right-0 mt-4 flex w-48 flex-col rounded-sm border border-stroke bg-white shadow-sm`}>
-          <button className='flex items-center gap-3 px-6 py-4 text-md font-medium duration-300 ease-in-out hover:text-primary lg:text-base'>
+          <button className='flex items-center gap-3 px-6 py-4 text-md font-medium duration-300 ease-in-out hover:text-blue-600 lg:text-base'>
             <FaSignOutAlt />
             Log Out
           </button>
