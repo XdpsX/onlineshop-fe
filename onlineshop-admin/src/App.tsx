@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Loader } from './components/common'
+import { Loader, PageTitle } from './components/common'
 import MainLayout from './layouts/MainLayout'
+import { Route, Routes } from 'react-router-dom'
+import { Categories } from './pages'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -13,7 +15,18 @@ function App() {
     <Loader />
   ) : (
     <MainLayout>
-      <h1>Hello World</h1>
+      <Routes>
+        <Route index element={<div>Hello World</div>} />
+        <Route
+          path='/categories'
+          element={
+            <>
+              <PageTitle title='Categories | OnlineShop' />
+              <Categories />
+            </>
+          }
+        />
+      </Routes>
     </MainLayout>
   )
 }
