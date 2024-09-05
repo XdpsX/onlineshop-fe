@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { FaArrowLeft, FaListUl } from 'react-icons/fa'
+import { FaArrowLeft, FaListUl, FaHandHolding } from 'react-icons/fa'
 import Logo from '~/assets/logo.png'
 
 interface SidebarProps {
@@ -79,7 +79,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
       <div className='scrollbar flex flex-col overflow-y-auto duration-300 ease-linear'>
         {/* <!-- Sidebar Menu --> */}
-        <nav className='mt-5 py-4 px-4 lg:mt-9 lg:px-6 text-2xl'>
+        <nav className='mt-5 py-4 px-4 lg:mt-9 lg:px-6 text-xl'>
           <ul className='mb-6 flex flex-col gap-1'>
             {/* <!-- Menu Item Category --> */}
             <li>
@@ -94,6 +94,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </NavLink>
             </li>
             {/* <!-- Menu Item Category --> */}
+            {/* <!-- Menu Item Brand --> */}
+            <li>
+              <NavLink
+                to='/brands'
+                className={`group relative flex items-center gap-2 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-yellow-500 ${
+                  pathname.includes('brands') && 'bg-yellow-500'
+                }`}
+              >
+                <FaHandHolding />
+                Thương hiệu
+              </NavLink>
+            </li>
+            {/* <!-- Menu Item Brand --> */}
           </ul>
         </nav>
       </div>

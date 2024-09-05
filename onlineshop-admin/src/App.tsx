@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Loader, PageTitle } from './components/common'
 import MainLayout from './layouts/MainLayout'
 import { Route, Routes } from 'react-router-dom'
-import { Categories } from './pages'
+import { Brands, Categories } from './pages'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -21,8 +21,17 @@ function App() {
           path='/categories'
           element={
             <>
-              <PageTitle title='Categories | OnlineShop' />
+              <PageTitle title='Danh mục | OnlineShop' />
               <Categories />
+            </>
+          }
+        />
+        <Route
+          path='/brands'
+          element={
+            <>
+              <PageTitle title='Thương hiệu | OnlineShop' />
+              <Brands />
             </>
           }
         />
