@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import categoryReducer from './features/categorySlice'
+import brandReducer from './features/brandSlice'
 
 const store = configureStore({
   reducer: {
-    category: categoryReducer
+    category: categoryReducer,
+    brand: brandReducer
   }
 })
 
