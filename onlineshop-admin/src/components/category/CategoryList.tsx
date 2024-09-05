@@ -11,7 +11,6 @@ const CategoryList = () => {
 
   const dispatch = useAppDispatch()
   const { categoryPage, isLoading, params } = useAppSelector(selectCategory)
-  const { items: categories, pageNum, pageSize, totalPages } = categoryPage
   const { search, sort } = params
 
   const onPageChange = (newPageNum: number) => {
@@ -35,14 +34,15 @@ const CategoryList = () => {
     return <Loader isDark />
   }
 
-  if (!categories) {
+  if (!categoryPage) {
     return
   }
+  const { items: categories, pageNum, pageSize, totalPages } = categoryPage
   return (
     <div className='py-12'>
       {categories.length === 0 ? (
         <div className='text-center py-24 lg:py-36'>
-          <h2 className='font-bold text-2xl'>No Category Found</h2>
+          <h2 className='font-bold text-2xl'>Không tìm thấy Danh mục nào</h2>
         </div>
       ) : (
         <>

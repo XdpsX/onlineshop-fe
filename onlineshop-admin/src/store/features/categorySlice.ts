@@ -83,7 +83,7 @@ export const deleteCategory = createAsyncThunk(
 )
 
 interface CategoryState {
-  categoryPage: PageResponse<Category>
+  categoryPage: PageResponse<Category> | null
   params: PageParams
   totalItems: number
   totalPages: number
@@ -95,13 +95,7 @@ interface CategoryState {
 }
 
 const initialState: CategoryState = {
-  categoryPage: {
-    items: null,
-    pageNum: 0,
-    pageSize: 0,
-    totalItems: 0,
-    totalPages: 0
-  },
+  categoryPage: null,
   params: {
     pageNum: 1,
     pageSize: 7,
