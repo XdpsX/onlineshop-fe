@@ -4,7 +4,6 @@ import { Category, CategoryRequest } from '~/types/category'
 import api from '~/utils/api'
 import { RootState } from '..'
 import { PageParams, PageResponse } from '~/types/page'
-import { DEFAULT_SORT } from '~/utils/data'
 import { ErrorDTO } from '~/types/error'
 
 export const getCategoriesByPage = createAsyncThunk(
@@ -84,7 +83,6 @@ export const deleteCategory = createAsyncThunk(
 
 interface CategoryState {
   categoryPage: PageResponse<Category> | null
-  params: PageParams
   totalItems: number
   totalPages: number
   updateCategory: Category | null
@@ -96,12 +94,6 @@ interface CategoryState {
 
 const initialState: CategoryState = {
   categoryPage: null,
-  params: {
-    pageNum: 1,
-    pageSize: 7,
-    search: null,
-    sort: DEFAULT_SORT
-  },
   totalItems: 0,
   totalPages: 0,
   updateCategory: null,
@@ -115,9 +107,6 @@ const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    updateParams: (state, { payload }) => {
-      state.params = payload
-    },
     setShowModal: (state, { payload }) => {
       state.showModal = payload
     },
@@ -158,7 +147,7 @@ const categorySlice = createSlice({
   }
 })
 
-export const { updateParams, setShowModal, setUpdateCategory, setDeleteCategory } = categorySlice.actions
+export const { setShowModal, setUpdateCategory, setDeleteCategory } = categorySlice.actions
 export const selectCategory = (state: RootState) => state.category
 
 const categoryReducer = categorySlice.reducer

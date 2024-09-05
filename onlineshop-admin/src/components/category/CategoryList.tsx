@@ -1,25 +1,12 @@
-import { Loader, Pagination } from '../common'
-import { useSearchParams } from 'react-router-dom'
+import { Loader } from '../common'
 import { useAppDispatch, useAppSelector } from '~/store'
 import { selectCategory, setDeleteCategory, setShowModal, setUpdateCategory } from '~/store/features/categorySlice'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { Category } from '~/types/category'
 
 const CategoryList = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setSearchParams] = useSearchParams()
-
   const dispatch = useAppDispatch()
-  const { categoryPage, isLoading, params } = useAppSelector(selectCategory)
-  const { search, sort } = params
-
-  const onPageChange = (newPageNum: number) => {
-    const params: { [key: string]: string } = { pageNum: String(newPageNum), sort: sort }
-    if (search) {
-      params.search = search
-    }
-    setSearchParams(params)
-  }
+  const { categoryPage, isLoading } = useAppSelector(selectCategory)
 
   const onEditCategory = (categoryToUpdate: Category) => {
     dispatch(setUpdateCategory(categoryToUpdate))
@@ -37,9 +24,10 @@ const CategoryList = () => {
   if (!categoryPage) {
     return
   }
-  const { items: categories, pageNum, pageSize, totalPages } = categoryPage
+  const { items: categories, pageSize, pageNum } = categoryPage
+
   return (
-    <div className='py-12'>
+    <div className='w-full p-4 bg-violet-500 text-white rounded-md shadow-md py-12'>
       {categories.length === 0 ? (
         <div className='text-center py-24 lg:py-36'>
           <h2 className='font-bold text-2xl'>Không tìm thấy Danh mục nào</h2>
@@ -101,11 +89,6 @@ const CategoryList = () => {
               </tbody>
             </table>
           </div>
-          {totalPages > 1 && (
-            <div className='w-full flex justify-end mt-8 bottom-4 right-4'>
-              <Pagination pageNum={pageNum} onPageChange={onPageChange} totalPages={totalPages} />
-            </div>
-          )}
         </>
       )}
     </div>

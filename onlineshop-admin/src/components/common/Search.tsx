@@ -14,6 +14,7 @@ const Search = ({ curSearch, onSearching, onClear }: SearchProps) => {
   const handleSearch = (e: FormEvent) => {
     e.preventDefault()
     onSearching(searchTerm)
+    setSearchTerm('')
   }
 
   const handleClear = () => {
@@ -22,7 +23,10 @@ const Search = ({ curSearch, onSearching, onClear }: SearchProps) => {
   }
 
   return (
-    <form onSubmit={handleSearch} className='inline-flex justify-between items-center bg-white rounded-md'>
+    <form
+      onSubmit={handleSearch}
+      className='border border-gray-400 inline-flex justify-between items-center bg-white rounded-md'
+    >
       <input
         onChange={(e) => setSearchTerm(e.target.value)}
         value={searchTerm}
@@ -30,13 +34,16 @@ const Search = ({ curSearch, onSearching, onClear }: SearchProps) => {
         type='text'
         placeholder='Tìm kiếm...'
       />
-      <button type='submit' className='text-center bg-blue-500 p-1 md:p-2 transition-colors hover:bg-blue-600'>
+      <button
+        type='submit'
+        className='text-center text-white bg-blue-500 p-1 md:p-2 transition-colors hover:bg-blue-600'
+      >
         <FaSearch size={28} title='Tìm kiếm' />
       </button>
       <button
         type='button'
         onClick={handleClear}
-        className='text-center bg-gray-400 p-1 md:p-2 rounded-e-md transition-colors hover:bg-gray-500'
+        className='text-center text-white bg-gray-400 p-1 md:p-2 rounded-e-md transition-colors hover:bg-gray-500'
       >
         <FaEraser size={28} title='Xoá' />
       </button>

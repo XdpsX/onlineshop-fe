@@ -57,9 +57,7 @@ const Pagination = ({ pageNum, totalPages, onPageChange }: PaginationProps) => {
           key={i}
           onClick={() => handlePageChange(i)}
           disabled={pageNum === i}
-          className={`text-sm px-4 py-2 border rounded ${
-            pageNum === i ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
-          }`}
+          className={` px-4 py-2 border border-gray-500 rounded ${pageNum === i ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
         >
           {i}
         </button>
@@ -69,11 +67,11 @@ const Pagination = ({ pageNum, totalPages, onPageChange }: PaginationProps) => {
   }
 
   return (
-    <div className='mx-auto flex justify-center items-center space-x-2 mt-4'>
+    <div className='mx-auto font-semibold text-lg flex justify-center items-center space-x-2 mt-6'>
       <button
         onClick={handleFirstPage}
         disabled={pageNum === 1}
-        className='text-sm px-4 py-2 border rounded bg-white text-blue-500 disabled:opacity-50 disabled:cursor-not-allowed'
+        className=' px-4 py-2 border border-gray-500 rounded bg-white  text-blue-500 disabled:opacity-50 disabled:text-gray-500 disabled:cursor-not-allowed'
       >
         Đầu
       </button>
@@ -81,7 +79,7 @@ const Pagination = ({ pageNum, totalPages, onPageChange }: PaginationProps) => {
       <button
         onClick={handleLastPage}
         disabled={pageNum === totalPages}
-        className='text-sm px-4 py-2 border rounded bg-white text-blue-500 disabled:opacity-50 disabled:cursor-not-allowed'
+        className=' px-4 py-2 border border-gray-500 rounded bg-white text-blue-500 disabled:opacity-50 disabled:text-gray-500 disabled:cursor-not-allowed'
       >
         Cuối
       </button>

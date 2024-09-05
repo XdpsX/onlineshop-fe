@@ -16,7 +16,6 @@ const BrandList = () => {
 
   const { items: brands, pageNum, pageSize } = brandPage
 
-  console.log('render')
   return (
     <div className='w-full px-4 bg-violet-500 text-white rounded-md shadow-md py-12'>
       {brands?.length === 0 ? (

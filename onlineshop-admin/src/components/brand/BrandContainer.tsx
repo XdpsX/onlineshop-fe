@@ -25,9 +25,7 @@ const BrandContainer = () => {
     <>
       <BrandList />
       {brandPage?.totalPages && brandPage.totalPages > 1 && (
-        <div className='w-full flex justify-end mt-8 bottom-4 right-4'>
-          <Pagination pageNum={brandPage.pageNum} onPageChange={onPageChange} totalPages={brandPage.totalPages} />
-        </div>
+        <Pagination pageNum={brandPage.pageNum} onPageChange={onPageChange} totalPages={brandPage.totalPages} />
       )}
     </>
   )

@@ -7,16 +7,9 @@ import { slugify } from '~/utils/helper'
 import debounce from 'lodash/debounce'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import { useAppDispatch, useAppSelector } from '~/store'
-import {
-  selectCategory,
-  checkCategoryExists,
-  updateCategory,
-  createCategory,
-  getCategoriesByPage
-} from '~/store/features/categorySlice'
+import { selectCategory, checkCategoryExists, updateCategory, createCategory } from '~/store/features/categorySlice'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { DEFAULT_SORT } from '~/utils/data'
 
 // Schema validation
 const schema = yup.object().shape({
@@ -125,7 +118,6 @@ const CategoryForm = ({ isEditMode = false, closeModal }: CategoryFormProps) => 
       if (!categoryToEdit) return
       const resultAction = await dispatch(updateCategory({ id: categoryToEdit.id, request: data }))
       if (updateCategory.fulfilled.match(resultAction)) {
-        dispatch(getCategoriesByPage({ pageNum: 1, search: null, sort: DEFAULT_SORT }))
         closeModal()
         navigate('/categories')
         toast.success('Cập nhật danh mục thành công')
@@ -134,7 +126,6 @@ const CategoryForm = ({ isEditMode = false, closeModal }: CategoryFormProps) => 
       console.log('Adding new category:', data)
       const resultAction = await dispatch(createCategory(data))
       if (createCategory.fulfilled.match(resultAction)) {
-        dispatch(getCategoriesByPage({ pageNum: 1, search: null, sort: DEFAULT_SORT }))
         closeModal()
         toast.success('Thêm danh mục thành công')
         navigate('/categories')
