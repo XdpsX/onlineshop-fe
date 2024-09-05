@@ -5,3 +5,10 @@ export interface PageResponse<T> {
   totalItems: number
   totalPages: number
 }
+
+export interface PageParams {
+  pageNum: number | 1
+  pageSize?: 7
+  search: string | null
+  sort: string
+}

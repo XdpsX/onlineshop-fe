@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { Category, CategoryParams, CategoryRequest } from '~/types/category'
+import { Category, CategoryRequest } from '~/types/category'
 import api from '~/utils/api'
 import { RootState } from '..'
-import { PageResponse } from '~/types/pageResponse'
+import { PageParams, PageResponse } from '~/types/page'
 import { DEFAULT_SORT } from '~/utils/data'
 import { ErrorDTO } from '~/types/error'
 
 export const getCategoriesByPage = createAsyncThunk(
   'category/getCategoriesByPage',
-  async (params: CategoryParams, { rejectWithValue, fulfillWithValue }) => {
+  async (params: PageParams, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.get<PageResponse<Category>>('/categories/filters', {
         params
@@ -84,7 +84,7 @@ export const deleteCategory = createAsyncThunk(
 
 interface CategoryState {
   categoryPage: PageResponse<Category>
-  params: CategoryParams
+  params: PageParams
   totalItems: number
   totalPages: number
   updateCategory: Category | null
