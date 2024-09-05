@@ -28,17 +28,17 @@ const Search = ({ curSearch, onSearching, onClear }: SearchProps) => {
         value={searchTerm}
         className='px-1 md:px-2 focus:border-indigo-500 outline-none rounded-s-md text-black'
         type='text'
-        placeholder='Search...'
+        placeholder='Tìm kiếm...'
       />
       <button type='submit' className='text-center bg-blue-500 p-1 md:p-2 transition-colors hover:bg-blue-600'>
-        <FaSearch size={28} title='Search' />
+        <FaSearch size={28} title='Tìm kiếm' />
       </button>
       <button
         type='button'
         onClick={handleClear}
         className='text-center bg-gray-400 p-1 md:p-2 rounded-e-md transition-colors hover:bg-gray-500'
       >
-        <FaEraser size={28} title='Clear' />
+        <FaEraser size={28} title='Xoá' />
       </button>
     </form>
   )

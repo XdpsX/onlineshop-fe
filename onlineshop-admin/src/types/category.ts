@@ -10,3 +10,8 @@ export interface CategoryParams {
   search: string | null
   sort: string
 }
+
+export type CategoryRequest = {
+  name: string
+  slug: string
+}

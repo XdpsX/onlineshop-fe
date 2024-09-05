@@ -90,7 +90,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }`}
               >
                 <FaListUl />
-                Category
+                Danh mục
               </NavLink>
             </li>
             {/* <!-- Menu Item Category --> */}

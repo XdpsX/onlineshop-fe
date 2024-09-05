@@ -1,13 +1,15 @@
 import { Loader, Pagination } from '../common'
 import { useSearchParams } from 'react-router-dom'
-import { useAppSelector } from '~/store'
-import { selectCategory } from '~/store/features/categorySlice'
+import { useAppDispatch, useAppSelector } from '~/store'
+import { selectCategory, setDeleteCategory, setShowModal, setUpdateCategory } from '~/store/features/categorySlice'
 import { FaEdit, FaTrash } from 'react-icons/fa'
+import { Category } from '~/types/category'
 
 const CategoryList = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setSearchParams] = useSearchParams()
 
+  const dispatch = useAppDispatch()
   const { categoryPage, isLoading, params } = useAppSelector(selectCategory)
   const { items: categories, pageNum, pageSize, totalPages } = categoryPage
   const { search, sort } = params
@@ -20,8 +22,21 @@ const CategoryList = () => {
     setSearchParams(params)
   }
 
+  const onEditCategory = (categoryToUpdate: Category) => {
+    dispatch(setUpdateCategory(categoryToUpdate))
+    dispatch(setShowModal(true))
+  }
+
+  const onDeleteCategory = (categoryToDelete: Category) => {
+    dispatch(setDeleteCategory(categoryToDelete))
+  }
+
   if (isLoading) {
     return <Loader isDark />
+  }
+
+  if (!categories) {
+    return
   }
   return (
     <div className='py-12'>
@@ -66,12 +81,14 @@ const CategoryList = () => {
                     <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                       <div className='flex justify-start items-center gap-4 text-white'>
                         <button
+                          onClick={() => onEditCategory(cat)}
                           title='Edit'
                           className='p-3 bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'
                         >
                           <FaEdit />
                         </button>
                         <button
+                          onClick={() => onDeleteCategory(cat)}
                           title='Delete'
                           className='p-3 bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'
                         >

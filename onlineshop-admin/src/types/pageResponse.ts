@@ -1,5 +1,5 @@
 export interface PageResponse<T> {
-  items: T[]
+  items: T[] | null
   pageNum: number
   pageSize: number
   totalItems: number

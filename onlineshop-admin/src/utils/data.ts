@@ -1,22 +1,22 @@
 export const sortOptions = [
   {
     id: 1,
-    title: 'Date: Newest',
+    title: 'Mới nhất',
     value: '-date'
   },
   {
     id: 2,
-    title: 'Date: Latest',
+    title: 'Cũ nhất',
     value: 'date'
   },
   {
     id: 3,
-    title: 'Name: A-Z',
+    title: 'Tên: A-Z',
     value: 'name'
   },
   {
     id: 4,
-    title: 'Name: Z-A',
+    title: 'Tên: Z-A',
     value: '-name'
   }
 ]
