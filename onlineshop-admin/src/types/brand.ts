@@ -6,3 +6,9 @@ export type Brand = {
   logo: string
   categories: Category[]
 }
+
+export type BrandRequest = {
+  name: string
+  logo: File | null
+  categoryIds: number[]
+}

@@ -1,11 +1,21 @@
-import { useAppSelector } from '~/store'
-import { selectBrand } from '~/store/features/brandSlice'
+import { useAppDispatch, useAppSelector } from '~/store'
+import { selectBrand, setDeleteBrand, setUpdateBrand } from '~/store/features/brandSlice'
 import { Loader } from '../common'
 
 import { FaEdit, FaTrash } from 'react-icons/fa'
+import { Brand } from '~/types/brand'
 
 const BrandList = () => {
+  const dispatch = useAppDispatch()
   const { brandPage, isLoading } = useAppSelector(selectBrand)
+
+  const onEditBrand = (brandToUpdate: Brand) => {
+    dispatch(setUpdateBrand(brandToUpdate))
+  }
+
+  const onDeleteBrand = (brandToDelete: Brand) => {
+    dispatch(setDeleteBrand(brandToDelete))
+  }
 
   if (isLoading) {
     return <Loader isDark />
@@ -70,14 +80,14 @@ const BrandList = () => {
                     <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                       <div className='flex justify-start items-center gap-4 text-white'>
                         <button
-                          // onClick={() => onEditCategory(cat)}
+                          onClick={() => onEditBrand(brand)}
                           title='Edit'
                           className='p-3 bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'
                         >
                           <FaEdit />
                         </button>
                         <button
-                          // onClick={() => onDeleteCategory(cat)}
+                          onClick={() => onDeleteBrand(brand)}
                           title='Delete'
                           className='p-3 bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'
                         >

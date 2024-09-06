@@ -21,10 +21,78 @@ export const getBrandsByPage = createAsyncThunk(
   }
 )
 
+export const checkBrandExists = createAsyncThunk(
+  'brand/checkCategoryExists',
+  async ({ name }: { name: string }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      const { data } = await api.get('/brands/exists', {
+        params: {
+          name
+        }
+      })
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
+export const createBrand = createAsyncThunk(
+  'brand/createBrand',
+  async (request: FormData, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.post('/brands/create', request, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
+export const updateBrand = createAsyncThunk(
+  'brand/updateBrand',
+  async ({ id, request }: { id: number; request: FormData }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.put(`/brands/${id}/update`, request, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
+export const deleteBrand = createAsyncThunk(
+  'brand/deleteBrand',
+  async (brandId: number, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.delete(`/brands/${brandId}/delete`)
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
 interface BrandState {
   brandPage: PageResponse<Brand> | null
   totalItems: number
   totalPages: number
+  updateBrand: Brand | null
+  deleteBrand: Brand | null
   showModal: boolean
   isLoading: boolean
   error: ErrorDTO | null
@@ -34,6 +102,8 @@ const initialState: BrandState = {
   brandPage: null,
   totalItems: 0,
   totalPages: 0,
+  updateBrand: null,
+  deleteBrand: null,
   showModal: false,
   isLoading: false,
   error: null
@@ -45,6 +115,12 @@ const brandSlice = createSlice({
   reducers: {
     setShowModal: (state, { payload }: { payload: boolean }) => {
       state.showModal = payload
+    },
+    setUpdateBrand: (state, { payload }) => {
+      state.updateBrand = payload
+    },
+    setDeleteBrand: (state, { payload }) => {
+      state.deleteBrand = payload
     }
   },
   extraReducers: (builder) => {
@@ -61,10 +137,24 @@ const brandSlice = createSlice({
         state.isLoading = false
         state.error = payload as ErrorDTO
       })
+
+      .addCase(createBrand.fulfilled, (state) => {
+        state.error = null
+      })
+      .addCase(createBrand.rejected, (state, { payload }) => {
+        state.error = payload as ErrorDTO
+      })
+
+      .addCase(updateBrand.fulfilled, (state) => {
+        state.error = null
+      })
+      .addCase(updateBrand.rejected, (state, { payload }) => {
+        state.error = payload as ErrorDTO
+      })
   }
 })
 
-export const { setShowModal } = brandSlice.actions
+export const { setShowModal, setUpdateBrand, setDeleteBrand } = brandSlice.actions
 export const selectBrand = (state: RootState) => state.brand
 
 const brandReducer = brandSlice.reducer

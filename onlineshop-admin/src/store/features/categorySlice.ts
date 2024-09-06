@@ -81,6 +81,19 @@ export const deleteCategory = createAsyncThunk(
   }
 )
 
+export const getAllCategories = createAsyncThunk(
+  'category/getAllCategories',
+  async (_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.get<Category[]>('/categories/get-all')
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
 interface CategoryState {
   categoryPage: PageResponse<Category> | null
   totalItems: number

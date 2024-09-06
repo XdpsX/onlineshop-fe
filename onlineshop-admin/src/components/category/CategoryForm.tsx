@@ -7,9 +7,16 @@ import { slugify } from '~/utils/helper'
 import debounce from 'lodash/debounce'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import { useAppDispatch, useAppSelector } from '~/store'
-import { selectCategory, checkCategoryExists, updateCategory, createCategory } from '~/store/features/categorySlice'
+import {
+  selectCategory,
+  checkCategoryExists,
+  updateCategory,
+  createCategory,
+  getCategoriesByPage
+} from '~/store/features/categorySlice'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { DEFAULT_SORT } from '~/utils/data'
 
 // Schema validation
 const schema = yup.object().shape({
@@ -121,6 +128,7 @@ const CategoryForm = ({ isEditMode = false, closeModal }: CategoryFormProps) => 
         closeModal()
         navigate('/categories')
         toast.success('Cập nhật danh mục thành công')
+        dispatch(getCategoriesByPage({ pageNum: 1, sort: DEFAULT_SORT, search: null }))
       }
     } else {
       console.log('Adding new category:', data)
@@ -129,6 +137,7 @@ const CategoryForm = ({ isEditMode = false, closeModal }: CategoryFormProps) => 
         closeModal()
         toast.success('Thêm danh mục thành công')
         navigate('/categories')
+        dispatch(getCategoriesByPage({ pageNum: 1, sort: DEFAULT_SORT, search: null }))
       }
     }
     setIsProcessing(false)

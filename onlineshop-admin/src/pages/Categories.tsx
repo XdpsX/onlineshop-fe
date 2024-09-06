@@ -10,7 +10,7 @@ import { PageParams } from '~/types/page'
 
 const Categories = () => {
   const dispatch = useAppDispatch()
-  const { categoryPage } = useAppSelector(selectCategory)
+  const { categoryPage, error } = useAppSelector(selectCategory)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { pageNum, search, sort }: PageParams = {
@@ -22,8 +22,6 @@ const Categories = () => {
   useEffect(() => {
     dispatch(getCategoriesByPage({ pageNum, search, sort }))
   }, [dispatch, searchParams, pageNum, search, sort])
-
-  const { error } = useAppSelector(selectCategory)
 
   useEffect(() => {
     toast.error(error?.message)

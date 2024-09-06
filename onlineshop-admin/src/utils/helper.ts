@@ -20,3 +20,22 @@ export const slugify = (text: string) => {
     .replace(/^-+/, '')
     .replace(/-+$/, '')
 }
+
+export const checkDuplicates = (list1: number[], list2: number[]) => {
+  // Nếu độ dài khác nhau, không giống nhau
+  if (list1.length !== list2.length) {
+    return false
+  }
+
+  // Sắp xếp và so sánh hai danh sách
+  const sortedList1 = [...list1].sort()
+  const sortedList2 = [...list2].sort()
+
+  for (let i = 0; i < sortedList1.length; i++) {
+    if (sortedList1[i] !== sortedList2[i]) {
+      return false // Nếu có bất kỳ phần tử nào khác nhau, không giống nhau
+    }
+  }
+
+  return true // Nếu tất cả các phần tử đều giống nhau
+}
