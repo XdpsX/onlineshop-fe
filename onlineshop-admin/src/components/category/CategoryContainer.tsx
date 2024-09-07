@@ -22,7 +22,7 @@ const CategoryContainer = () => {
   }
 
   return (
-    <div>
+    <div className='pb-12'>
       <CategoryList />
       {categoryPage?.totalPages && categoryPage.totalPages > 1 && (
         <Pagination pageNum={categoryPage.pageNum} onPageChange={onPageChange} totalPages={categoryPage.totalPages} />

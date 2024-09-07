@@ -18,7 +18,7 @@ const CategoryList = () => {
   }
 
   if (isLoading) {
-    return <Loader isDark />
+    return <Loader />
   }
 
   if (!categoryPage) {

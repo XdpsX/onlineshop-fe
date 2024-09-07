@@ -22,12 +22,12 @@ const BrandContainer = () => {
   }
 
   return (
-    <>
+    <div className='pb-12'>
       <BrandList />
       {brandPage?.totalPages && brandPage.totalPages > 1 && (
         <Pagination pageNum={brandPage.pageNum} onPageChange={onPageChange} totalPages={brandPage.totalPages} />
       )}
-    </>
+    </div>
   )
 }
 export default BrandContainer

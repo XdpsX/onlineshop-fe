@@ -18,7 +18,7 @@ const BrandList = () => {
   }
 
   if (isLoading) {
-    return <Loader isDark />
+    return <Loader />
   }
   if (!brandPage) {
     return
