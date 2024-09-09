@@ -87,6 +87,19 @@ export const deleteBrand = createAsyncThunk(
   }
 )
 
+export const getBrandsByCategoryId = createAsyncThunk(
+  'brand/getBrandsByCategoryId',
+  async (categoryId: number, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.get<Omit<Brand, 'categories'>[]>(`/categories/${categoryId}/brands`)
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
 interface BrandState {
   brandPage: PageResponse<Brand> | null
   totalItems: number
@@ -96,6 +109,7 @@ interface BrandState {
   showModal: boolean
   isLoading: boolean
   error: ErrorDTO | null
+  catBrands: Omit<Brand, 'categories'>[] | null
 }
 
 const initialState: BrandState = {
@@ -106,7 +120,8 @@ const initialState: BrandState = {
   deleteBrand: null,
   showModal: false,
   isLoading: false,
-  error: null
+  error: null,
+  catBrands: null
 }
 
 const brandSlice = createSlice({
@@ -121,6 +136,9 @@ const brandSlice = createSlice({
     },
     setDeleteBrand: (state, { payload }) => {
       state.deleteBrand = payload
+    },
+    resetCatBrands: (state) => {
+      state.catBrands = initialState.catBrands
     }
   },
   extraReducers: (builder) => {
@@ -131,7 +149,6 @@ const brandSlice = createSlice({
       .addCase(getBrandsByPage.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.brandPage = payload
-        state.error = null
       })
       .addCase(getBrandsByPage.rejected, (state, { payload }) => {
         state.isLoading = false
@@ -151,10 +168,22 @@ const brandSlice = createSlice({
       .addCase(updateBrand.rejected, (state, { payload }) => {
         state.error = payload as ErrorDTO
       })
+
+      .addCase(getBrandsByCategoryId.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getBrandsByCategoryId.fulfilled, (state, { payload }) => {
+        state.isLoading = false
+        state.catBrands = payload
+      })
+      .addCase(getBrandsByCategoryId.rejected, (state, { payload }) => {
+        state.isLoading = false
+        state.error = payload as ErrorDTO
+      })
   }
 })
 
-export const { setShowModal, setUpdateBrand, setDeleteBrand } = brandSlice.actions
+export const { setShowModal, setUpdateBrand, setDeleteBrand, resetCatBrands } = brandSlice.actions
 export const selectBrand = (state: RootState) => state.brand
 
 const brandReducer = brandSlice.reducer

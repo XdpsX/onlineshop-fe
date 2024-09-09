@@ -95,6 +95,7 @@ export const getAllCategories = createAsyncThunk(
 )
 
 interface CategoryState {
+  categories: Category[] | null
   categoryPage: PageResponse<Category> | null
   totalItems: number
   totalPages: number
@@ -106,6 +107,7 @@ interface CategoryState {
 }
 
 const initialState: CategoryState = {
+  categories: null,
   categoryPage: null,
   totalItems: 0,
   totalPages: 0,
@@ -138,7 +140,6 @@ const categorySlice = createSlice({
       .addCase(getCategoriesByPage.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.categoryPage = payload
-        state.error = null
       })
       .addCase(getCategoriesByPage.rejected, (state, { payload }) => {
         state.isLoading = false
@@ -155,6 +156,18 @@ const categorySlice = createSlice({
         state.error = null
       })
       .addCase(updateCategory.rejected, (state, { payload }) => {
+        state.error = payload as ErrorDTO
+      })
+
+      .addCase(getAllCategories.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getAllCategories.fulfilled, (state, { payload }) => {
+        state.isLoading = false
+        state.categories = payload
+      })
+      .addCase(getAllCategories.rejected, (state, { payload }) => {
+        state.isLoading = false
         state.error = payload as ErrorDTO
       })
   }

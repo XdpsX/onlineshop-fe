@@ -39,3 +39,18 @@ export const checkDuplicates = (list1: number[], list2: number[]) => {
 
   return true // Nếu tất cả các phần tử đều giống nhau
 }
+
+export const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0, // Adjust this if you want to show decimal places
+    maximumFractionDigits: 0
+  }).format(price)
+}
+
+export const fromStringToBoolean = (str: string) => {
+  if (!str) return null
+  if (str === '0') return false
+  return true
+}

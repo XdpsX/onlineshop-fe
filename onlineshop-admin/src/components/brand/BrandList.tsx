@@ -35,8 +35,8 @@ const BrandList = () => {
       ) : (
         <>
           <div className='relative overflow-x-auto'>
-            <table className='w-full text-lg md:text-xl text-left '>
-              <thead className='text-lg uppercase border-b border-slate-700 mb-2'>
+            <table className='w-full text-sm md:text-xl text-left'>
+              <thead className='text-lg uppercase border-b border-slate-700'>
                 <tr>
                   <th scope='col' className='py-3 px-4'>
                     No
@@ -58,7 +58,7 @@ const BrandList = () => {
 
               <tbody>
                 {brands.map((brand, i) => (
-                  <tr key={brand.id}>
+                  <tr key={brand.id} className='space-under'>
                     <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                       {(pageNum - 1) * pageSize + i + 1}
                     </td>
@@ -69,7 +69,7 @@ const BrandList = () => {
                       {brand.name}
                     </td>
                     <td scope='row' className='py-1 px-4 font-medium'>
-                      <div className='flex flex-wrap gap-x-4 gap-y-2'>
+                      <div className='flex flex-wrap gap-x-4  gap-y-2'>
                         {brand.categories.map((cat) => (
                           <div key={cat.id} className='bg-slate-200 text-black px-2 rounded-md'>
                             {cat.name}

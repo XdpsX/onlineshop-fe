@@ -7,6 +7,9 @@
   body {
     @apply font-Roboto bg-[#F1F5F9] text-[#64748B];
   }
+  tr.space-under > td:not(:last-child) {
+    padding-bottom: 1em;
+  }
 }
 
 @layer utilities {

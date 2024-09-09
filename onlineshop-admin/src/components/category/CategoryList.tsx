@@ -55,7 +55,7 @@ const CategoryList = () => {
 
               <tbody>
                 {categories.map((cat, i) => (
-                  <tr key={cat.id}>
+                  <tr key={cat.id} className='space-under'>
                     <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                       {(pageNum - 1) * pageSize + i + 1}
                     </td>

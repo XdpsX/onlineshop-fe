@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Loader, PageTitle } from './components/common'
 import MainLayout from './layouts/MainLayout'
 import { Route, Routes } from 'react-router-dom'
-import { Brands, Categories } from './pages'
+import { Brands, Categories, Products } from './pages'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -32,6 +32,15 @@ function App() {
             <>
               <PageTitle title='Thương hiệu | OnlineShop' />
               <Brands />
+            </>
+          }
+        />
+        <Route
+          path='/products/list'
+          element={
+            <>
+              <PageTitle title='Sản phẩm | OnlineShop' />
+              <Products />
             </>
           }
         />
