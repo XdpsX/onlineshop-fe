@@ -100,6 +100,17 @@ export const updateProduct = createAsyncThunk(
     }
   }
 )
+export const deleteProduct = createAsyncThunk(
+  'product/deleteProduct',
+  async (id: number, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      await api.delete(`/products/${id}/delete`)
+      return fulfillWithValue(id)
+    } catch (error) {
+      return rejectWithValue(getErrorMsg(error))
+    }
+  }
+)
 
 interface ProductState {
   params: ProductParams
@@ -116,8 +127,12 @@ interface ProductState {
   loading: {
     getProductById: boolean
     updateProduct: boolean
+    deleteProduct: boolean
   }
   prodToEdit?: ProductDetails
+  detailId?: number
+  productDetail?: ProductDetails
+  deleteId?: number
 }
 
 const initialState: ProductState = {
@@ -144,7 +159,8 @@ const initialState: ProductState = {
   },
   loading: {
     getProductById: true,
-    updateProduct: false
+    updateProduct: false,
+    deleteProduct: false
   }
 }
 
@@ -160,6 +176,12 @@ const productSlice = createSlice({
     },
     setEditId: (state, action) => {
       state.editId = action.payload
+    },
+    setDetailId: (state, action) => {
+      state.detailId = action.payload
+    },
+    setDeleteId: (state, action) => {
+      state.deleteId = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -217,7 +239,11 @@ const productSlice = createSlice({
       })
       .addCase(getProductById.fulfilled, (state, action) => {
         state.loading.getProductById = false
-        state.prodToEdit = action.payload
+        if (state.editId) {
+          state.prodToEdit = action.payload
+        } else if (state.detailId) {
+          state.productDetail = action.payload
+        }
       })
       .addCase(getProductById.rejected, (state, action) => {
         state.loading.getProductById = false
@@ -240,10 +266,24 @@ const productSlice = createSlice({
         state.loading.updateProduct = false
         toast.error(action.payload as string)
       })
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading.deleteProduct = true
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading.deleteProduct = false
+        if (state.productPage) {
+          const newProducts = state.productPage.items.filter((p) => p.id !== action.payload)
+          state.productPage.items = newProducts
+        }
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading.deleteProduct = false
+        toast.error(action.payload as string)
+      })
   }
 })
 
-export const { updateProductParams, resetProductParams, setEditId } = productSlice.actions
+export const { updateProductParams, resetProductParams, setEditId, setDetailId, setDeleteId } = productSlice.actions
 export const selectProduct = (state: RootState) => state.product
 const productReducer = productSlice.reducer
 export default productReducer

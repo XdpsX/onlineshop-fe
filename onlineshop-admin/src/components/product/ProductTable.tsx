@@ -1,10 +1,10 @@
 import { PageResponse } from '~/types/page'
 import { Product } from '~/types/product'
-import { FaEdit, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaTrash, FaFileAlt } from 'react-icons/fa'
 import { formatPrice } from '~/utils/helper'
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 import { useAppDispatch } from '~/store'
-import { publishProduct, setEditId } from '~/store/features/productSlice'
+import { publishProduct, setDeleteId, setDetailId, setEditId } from '~/store/features/productSlice'
 import { useNavigate } from 'react-router-dom'
 
 const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | null }) => {
@@ -33,13 +33,13 @@ const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | nu
 
   return (
     <div className='relative overflow-x-auto'>
-      <table className='w-full text-lg md:text-xl text-left '>
-        <thead className='text-lg uppercase border-b border-slate-700 mb-2'>
+      <table className='w-full text-center'>
+        <thead className='uppercase border-b border-slate-700 mb-2'>
           <tr>
-            <th scope='col' className='py-3 px-4'>
+            <th scope='col' className='py-3 px-2'>
               No
             </th>
-            <th scope='col' className='py-3 px-4'>
+            <th scope='col' className='py-3'>
               Image
             </th>
             <th scope='col' className='py-3 px-4'>
@@ -63,14 +63,14 @@ const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | nu
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className=''>
           {products.map((product, i) => (
             <tr key={product.id} className='space-under'>
-              <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
+              <td scope='row' className='py-1 px-2 font-medium whitespace-nowrap'>
                 {(pageNum - 1) * pageSize + i + 1}
               </td>
-              <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                <img src={product.mainImage} className='w-15' alt={`${product.name} logo`} />
+              <td scope='row' className='py-1 whitespace-nowrap'>
+                <img src={product.mainImage} className='w-15 mx-auto' alt={`${product.name} logo`} />
               </td>
               <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                 {product.name}
@@ -87,22 +87,33 @@ const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | nu
               <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                 <button
                   onClick={() => onPublish(product)}
-                  className='text-3xl'
+                  className='text-2xl transition-colors text-white hover:text-slate-200'
                   title={product.published ? 'Unpublish' : 'Publish'}
                 >
                   {product.published ? <FaCheckCircle /> : <FaTimesCircle />}
                 </button>
               </td>
               <td scope='row' className='py-1 px-4 whitespace-nowrap'>
-                <div className='flex items-center gap-4 text-white'>
+                <div className='flex items-center justify-center gap-2 text-white'>
+                  <button
+                    onClick={() => dispatch(setDetailId(product.id))}
+                    title='Chi tiết'
+                    className='p-2.5 bg-blue-500 rounded hover:shadow-lg hover:shadow-blue-500/50'
+                  >
+                    <FaFileAlt />
+                  </button>
                   <button
                     onClick={() => onEdit(product.id)}
-                    title='Edit'
-                    className='p-3 bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'
+                    title='Sửa'
+                    className='p-2.5 bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'
                   >
                     <FaEdit />
                   </button>
-                  <button title='Delete' className='p-3 bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'>
+                  <button
+                    onClick={() => dispatch(setDeleteId(product.id))}
+                    title='Xoá'
+                    className='p-2.5 bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'
+                  >
                     <FaTrash />
                   </button>
                 </div>
