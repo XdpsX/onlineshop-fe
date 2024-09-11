@@ -10,6 +10,27 @@
   tr.space-under > td:not(:last-child) {
     padding-bottom: 1em;
   }
+  .ckeditor-container {
+    height: 400px; /* Thay đổi giá trị này theo nhu cầu */
+    //overflow-y: auto; /* Thêm thanh cuộn nếu nội dung vượt quá chiều cao tối đa */
+  }
+
+  .ckeditor-container .ck-editor__editable {
+    min-height: 350px; /* Thiết lập chiều cao tối thiểu cho editor */
+    max-height: 350px; /* Thiết lập chiều cao tối đa cho editor */
+    overflow-y: auto; /* Thêm thanh cuộn nếu nội dung vượt quá chiều cao tối đa */
+  }
+
+  @media (max-width: 640px) {
+    .ckeditor-container {
+      height: 300px; /* Chiều cao cho màn hình nhỏ */
+    }
+
+    .ckeditor-container .ck-editor__editable {
+      min-height: 250px; /* Chiều cao tối thiểu cho màn hình nhỏ */
+      max-height: 250px; /* Chiều cao tối đa cho màn hình nhỏ */
+    }
+  }
 }
 
 @layer utilities {

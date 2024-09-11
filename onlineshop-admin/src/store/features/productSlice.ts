@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ErrorDTO } from '~/types/error'
 import { PageResponse } from '~/types/page'
-import { Product, ProductParams } from '~/types/product'
+import { Product, ProductCreate, ProductParams } from '~/types/product'
 import { RootState } from '..'
 import api from '~/utils/api'
 import { AxiosError } from 'axios'
@@ -35,6 +35,42 @@ export const publishProduct = createAsyncThunk(
   }
 )
 
+export const checkProductExists = createAsyncThunk(
+  'product/checkProductExists',
+  async ({ slug }: { slug: string }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      const { data } = await api.get('/products/exists', {
+        params: {
+          slug
+        }
+      })
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
+export const createProduct = createAsyncThunk(
+  'product/createProduct',
+  async (request: ProductCreate, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.post('/products/create', request, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return fulfillWithValue(data)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return rejectWithValue(axiosError.response?.data)
+    }
+  }
+)
+
 interface ProductState {
   params: ProductParams
   productPage: PageResponse<Product> | null
@@ -42,6 +78,10 @@ interface ProductState {
   totalPages: number
   isLoading: boolean
   error: ErrorDTO | null
+  isChecking: boolean
+  exists: {
+    slugExists: boolean
+  }
 }
 
 const initialState: ProductState = {
@@ -61,7 +101,11 @@ const initialState: ProductState = {
   totalItems: 0,
   totalPages: 0,
   isLoading: false,
-  error: null
+  error: null,
+  isChecking: false,
+  exists: {
+    slugExists: false
+  }
 }
 
 const productSlice = createSlice({
@@ -91,17 +135,37 @@ const productSlice = createSlice({
 
       .addCase(publishProduct.fulfilled, (state, { payload }) => {
         if (state.productPage) {
-          // Tìm sản phẩm dựa trên id từ payload
           const productIndex = state.productPage.items.findIndex((product) => product.id === payload)
 
-          // Nếu tìm thấy sản phẩm
           if (productIndex !== -1) {
-            // Cập nhật published thành giá trị ngược lại
             state.productPage.items[productIndex].published = !state.productPage.items[productIndex].published
           }
         }
       })
       .addCase(publishProduct.rejected, (state, { payload }) => {
+        state.error = payload as ErrorDTO
+      })
+
+      .addCase(checkProductExists.pending, (state) => {
+        state.isChecking = true
+      })
+      .addCase(checkProductExists.fulfilled, (state, { payload }) => {
+        state.isChecking = false
+        state.exists = payload
+      })
+      .addCase(checkProductExists.rejected, (state, { payload }) => {
+        state.isChecking = false
+        state.error = payload as ErrorDTO
+      })
+
+      .addCase(createProduct.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(createProduct.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addCase(createProduct.rejected, (state, { payload }) => {
+        state.isLoading = false
         state.error = payload as ErrorDTO
       })
   }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Loader, PageTitle } from './components/common'
 import MainLayout from './layouts/MainLayout'
 import { Route, Routes } from 'react-router-dom'
-import { Brands, Categories, Products } from './pages'
+import { Brands, Categories, CreateProduct, Products } from './pages'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -41,6 +41,15 @@ function App() {
             <>
               <PageTitle title='Sản phẩm | OnlineShop' />
               <Products />
+            </>
+          }
+        />
+        <Route
+          path='/products/new'
+          element={
+            <>
+              <PageTitle title='Thêm sản phẩm | OnlineShop' />
+              <CreateProduct />
             </>
           }
         />

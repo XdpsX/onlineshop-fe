@@ -7,10 +7,24 @@ export type Product = {
   slug: string
   price: number
   discountPercent: number
+  inStock: boolean
   published: boolean
   mainImage: string
   category: Category
   brand: Omit<Brand, 'categories'>
+}
+
+export type ProductCreate = {
+  name: string
+  slug: string
+  price: number
+  discountPercent?: number // Make optional
+  inStock?: boolean // Make optional
+  published?: boolean // Make optional
+  description?: string // Make optional
+  categoryId: number
+  brandId: number
+  images: File[]
 }
 
 export type ProductParams = {

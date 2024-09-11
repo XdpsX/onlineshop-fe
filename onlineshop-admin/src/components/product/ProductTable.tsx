@@ -7,9 +7,9 @@ import { useAppDispatch } from '~/store'
 import { publishProduct } from '~/store/features/productSlice'
 
 const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | null }) => {
+  const dispatch = useAppDispatch()
   if (!productPage) return null
 
-  const dispatch = useAppDispatch()
   const { items: products, pageNum, pageSize } = productPage
 
   const onPublish = (product: Product) => {
