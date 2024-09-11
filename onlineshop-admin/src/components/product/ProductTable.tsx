@@ -4,9 +4,11 @@ import { FaEdit, FaTrash } from 'react-icons/fa'
 import { formatPrice } from '~/utils/helper'
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 import { useAppDispatch } from '~/store'
-import { publishProduct } from '~/store/features/productSlice'
+import { publishProduct, setEditId } from '~/store/features/productSlice'
+import { useNavigate } from 'react-router-dom'
 
 const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | null }) => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   if (!productPage) return null
 
@@ -14,6 +16,11 @@ const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | nu
 
   const onPublish = (product: Product) => {
     dispatch(publishProduct({ id: product.id, status: !product.published }))
+  }
+
+  const onEdit = (productId: number) => {
+    dispatch(setEditId(productId))
+    navigate('/products/edit')
   }
 
   if (products.length === 0) {
@@ -88,7 +95,11 @@ const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | nu
               </td>
               <td scope='row' className='py-1 px-4 whitespace-nowrap'>
                 <div className='flex items-center gap-4 text-white'>
-                  <button title='Edit' className='p-3 bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'>
+                  <button
+                    onClick={() => onEdit(product.id)}
+                    title='Edit'
+                    className='p-3 bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'
+                  >
                     <FaEdit />
                   </button>
                   <button title='Delete' className='p-3 bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'>

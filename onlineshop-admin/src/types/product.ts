@@ -18,13 +18,27 @@ export type ProductCreate = {
   name: string
   slug: string
   price: number
-  discountPercent?: number // Make optional
-  inStock?: boolean // Make optional
-  published?: boolean // Make optional
-  description?: string // Make optional
+  discountPercent?: number
+  inStock?: boolean
+  published?: boolean
+  description?: string
   categoryId: number
   brandId: number
   images: File[]
+}
+
+export type ProductDetails = Product & {
+  description: string
+  images: ProductImage[]
+}
+
+export type ProductImage = {
+  id: number
+  url: string
+}
+
+export type ProductUpdate = ProductCreate & {
+  removedImageIds?: number[]
 }
 
 export type ProductParams = {

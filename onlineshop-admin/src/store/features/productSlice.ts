@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ErrorDTO } from '~/types/error'
 import { PageResponse } from '~/types/page'
-import { Product, ProductCreate, ProductParams } from '~/types/product'
+import { Product, ProductCreate, ProductDetails, ProductParams, ProductUpdate } from '~/types/product'
 import { RootState } from '..'
 import api from '~/utils/api'
 import { AxiosError } from 'axios'
 import { DEFAULT_SORT } from '~/utils/data'
+import { getErrorMsg } from '~/utils/helper'
+import { toast } from 'react-toastify'
 
 export const getProductsPage = createAsyncThunk(
   'product/getProductsPage',
@@ -71,6 +73,34 @@ export const createProduct = createAsyncThunk(
   }
 )
 
+export const getProductById = createAsyncThunk(
+  'product/getProductById',
+  async (id: number, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.get(`/products/${id}`)
+      return fulfillWithValue(data)
+    } catch (error) {
+      return rejectWithValue(getErrorMsg(error))
+    }
+  }
+)
+
+export const updateProduct = createAsyncThunk(
+  'product/updateProduct',
+  async ({ id, request }: { id: number; request: ProductUpdate }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.put(`/products/${id}/update`, request, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return fulfillWithValue(data)
+    } catch (error) {
+      return rejectWithValue(getErrorMsg(error))
+    }
+  }
+)
+
 interface ProductState {
   params: ProductParams
   productPage: PageResponse<Product> | null
@@ -82,6 +112,12 @@ interface ProductState {
   exists: {
     slugExists: boolean
   }
+  editId?: number
+  loading: {
+    getProductById: boolean
+    updateProduct: boolean
+  }
+  prodToEdit?: ProductDetails
 }
 
 const initialState: ProductState = {
@@ -105,6 +141,10 @@ const initialState: ProductState = {
   isChecking: false,
   exists: {
     slugExists: false
+  },
+  loading: {
+    getProductById: true,
+    updateProduct: false
   }
 }
 
@@ -117,6 +157,9 @@ const productSlice = createSlice({
     },
     resetProductParams: (state) => {
       state.params = initialState.params
+    },
+    setEditId: (state, action) => {
+      state.editId = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -168,10 +211,39 @@ const productSlice = createSlice({
         state.isLoading = false
         state.error = payload as ErrorDTO
       })
+
+      .addCase(getProductById.pending, (state) => {
+        state.loading.getProductById = true
+      })
+      .addCase(getProductById.fulfilled, (state, action) => {
+        state.loading.getProductById = false
+        state.prodToEdit = action.payload
+      })
+      .addCase(getProductById.rejected, (state, action) => {
+        state.loading.getProductById = false
+        toast.error(action.payload as string)
+      })
+
+      .addCase(updateProduct.pending, (state) => {
+        state.loading.updateProduct = true
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading.updateProduct = false
+        if (state.productPage) {
+          const productIndex = state.productPage.items.findIndex((product) => product.id === action.payload.id)
+          if (productIndex !== -1) {
+            state.productPage.items[productIndex] = action.payload
+          }
+        }
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.loading.updateProduct = false
+        toast.error(action.payload as string)
+      })
   }
 })
 
-export const { updateProductParams, resetProductParams } = productSlice.actions
+export const { updateProductParams, resetProductParams, setEditId } = productSlice.actions
 export const selectProduct = (state: RootState) => state.product
 const productReducer = productSlice.reducer
 export default productReducer

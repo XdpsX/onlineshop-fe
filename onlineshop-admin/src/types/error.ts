@@ -1,4 +1,4 @@
 export type ErrorDTO = {
-  status: number
-  message: string
+  status: number | 500
+  message: string | 'Internal Server'
 }

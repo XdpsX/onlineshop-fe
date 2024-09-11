@@ -1,3 +1,6 @@
+import { AxiosError } from 'axios'
+import { ErrorDTO } from '~/types/error'
+
 export const slugify = (text: string) => {
   const a = 'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;'
   const b = 'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------'
@@ -53,4 +56,10 @@ export const fromStringToBoolean = (str: string) => {
   if (!str) return null
   if (str === '0') return false
   return true
+}
+
+export const getErrorMsg = (error: unknown) => {
+  const axiosError = error as AxiosError
+  const errorDTO = axiosError.response?.data as ErrorDTO
+  return errorDTO ? errorDTO.message : 'Internal Server Error'
 }
