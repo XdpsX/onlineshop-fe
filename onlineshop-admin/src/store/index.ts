@@ -4,13 +4,15 @@ import categoryReducer from './features/categorySlice'
 import brandReducer from './features/brandSlice'
 import productReducer from './features/productSlice'
 import authReducer from './features/authSlice'
+import userReducer from './features/userSlice'
 
 const store = configureStore({
   reducer: {
     category: categoryReducer,
     brand: brandReducer,
     product: productReducer,
-    auth: authReducer
+    auth: authReducer,
+    user: userReducer
   }
 })
 

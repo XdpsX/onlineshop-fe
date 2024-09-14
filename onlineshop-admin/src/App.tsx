@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Loader, PageTitle } from './components/common'
 import MainLayout from './layouts/MainLayout'
 import { Route, Routes } from 'react-router-dom'
-import { Brands, Categories, CreateProduct, EditProduct, LoginPage, Products } from './pages'
+import { Brands, Categories, CreateProduct, Dashboard, EditProduct, LoginPage, Products } from './pages'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 
 function App() {
@@ -33,7 +33,15 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<div>Hello World</div>} />
+        <Route
+          index
+          element={
+            <>
+              <PageTitle title='Dashboard | OnlineShop' />
+              <Dashboard />
+            </>
+          }
+        />
         <Route
           path='/categories'
           element={
