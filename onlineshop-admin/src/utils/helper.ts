@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
 import { ErrorDTO } from '~/types/error'
 
 export const slugify = (text: string) => {
@@ -62,4 +63,25 @@ export const getErrorMsg = (error: unknown) => {
   const axiosError = error as AxiosError
   const errorDTO = axiosError.response?.data as ErrorDTO
   return errorDTO ? errorDTO.message : 'Internal Server Error'
+}
+
+interface CustomJwtPayload extends JwtPayload {
+  scope?: string
+}
+export const getRoleFromToken = (token: string) => {
+  if (token) {
+    const decodeToken = jwtDecode<CustomJwtPayload>(token)
+    if (decodeToken && decodeToken.exp) {
+      const expireTime = new Date(decodeToken.exp * 1000)
+      if (new Date() > expireTime) {
+        localStorage.removeItem('accessToken')
+        return ''
+      } else {
+        return decodeToken.scope || ''
+      }
+    }
+    return ''
+  } else {
+    return ''
+  }
 }

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { Loader, PageTitle } from './components/common'
 import MainLayout from './layouts/MainLayout'
 import { Route, Routes } from 'react-router-dom'
-import { Brands, Categories, CreateProduct, EditProduct, Products } from './pages'
+import { Brands, Categories, CreateProduct, EditProduct, LoginPage, Products } from './pages'
+import ProtectedRoute from './components/layout/ProtectedRoute'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -14,8 +15,24 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
-    <MainLayout>
-      <Routes>
+    <Routes>
+      <Route
+        path='/login'
+        element={
+          <>
+            <PageTitle title='Đăng nhập | OnlineShop' />
+            <LoginPage />
+          </>
+        }
+      />
+      <Route
+        path='/'
+        element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<div>Hello World</div>} />
         <Route
           path='/categories'
@@ -62,8 +79,8 @@ function App() {
             </>
           }
         />
-      </Routes>
-    </MainLayout>
+      </Route>
+    </Routes>
   )
 }
 

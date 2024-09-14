@@ -1,7 +1,8 @@
-import { ReactNode, useState } from 'react'
+import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 import { Header, Sidebar } from '~/components/layout'
 
-const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (
@@ -20,7 +21,9 @@ const MainLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className='mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10'>{children}</div>
+            <div className='mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10'>
+              <Outlet />
+            </div>
           </main>
           {/* <!-- ===== Main Content End ===== --> */}
         </div>
