@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { FaCartShopping } from 'react-icons/fa6'
 import DropdownUser from './DropdownUser'
+import { useAppSelector } from '../../app/hooks'
+import { selectUser } from '../../features/user/userSlice'
 
 const Header = () => {
-  const user = true
+  const { profile } = useAppSelector(selectUser)
   const wishlist_count = 3
 
   return (
@@ -34,17 +36,22 @@ const Header = () => {
                 {wishlist_count}
               </div>
             </div>
-            {user ? (
-              <DropdownUser />
+            {profile ? (
+              <DropdownUser profile={profile} />
             ) : (
               <div className='flex justify-center items-center gap-2 text-sm md:text-lg'>
-                <Link className='cursor-pointer font-bold text-black transition-colors hover:text-gray-600' to='/login'>
+                <Link
+                  className='cursor-pointer font-bold text-black transition-colors hover:text-gray-600'
+                  to='/login'
+                  target='_blank'
+                >
                   Đăng nhập
                 </Link>
                 <span>|</span>
                 <Link
                   className='cursor-pointer font-bold text-black transition-colors hover:text-gray-600'
                   to='/register'
+                  target='_blank'
                 >
                   Đăng kí
                 </Link>

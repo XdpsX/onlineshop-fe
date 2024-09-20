@@ -7,7 +7,7 @@ const Footer = () => {
       <div className='w-[85%] flex justify-between gap-6 md:gap-0 flex-wrap mx-auto border-b py-10 sm:pb-6'>
         <div className='flex flex-col gap-3'>
           <img src='./logo.png' alt='Logo' className='w-16' />
-          <ul className='flex flex-col font-semibold gap-2 text-slate-600'>
+          <ul className='flex flex-col font-semibold gap-2 text-slate-600 text-sm'>
             <li className='flex items-center gap-2 '>
               <FaMapMarkerAlt />
 
