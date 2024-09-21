@@ -39,7 +39,7 @@ const Header = () => {
             {profile ? (
               <DropdownUser profile={profile} />
             ) : (
-              <div className='flex justify-center items-center gap-2 text-sm md:text-lg'>
+              <div className='flex justify-center items-center gap-2 3xl:text-lg'>
                 <Link
                   className='cursor-pointer font-bold text-black transition-colors hover:text-gray-600'
                   to='/login'

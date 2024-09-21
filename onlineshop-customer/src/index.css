@@ -7,3 +7,7 @@
     @apply font-roboto font-normal text-base;
   }
 }
+
+.react-multi-carousel-dot--active button {
+  background: #ccc !important;
+}
