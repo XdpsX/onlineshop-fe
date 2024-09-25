@@ -75,7 +75,7 @@ function CategoryDropdown() {
               <li key={cat.id} className=''>
                 <Link
                   to={`categories/${cat.slug}`}
-                  className='px-5 py-1.5 text-sm block text-gray-700 font-semibold hover:bg-yellow-500 hover:text-white'
+                  className='px-5 py-2.5 text-sm block text-gray-700 font-semibold hover:bg-yellow-500 hover:text-white'
                 >
                   {cat.name}
                 </Link>

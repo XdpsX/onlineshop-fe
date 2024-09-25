@@ -1,5 +1,4 @@
 import Carousel from 'react-multi-carousel'
-import { Link } from 'react-router-dom'
 
 function Banner() {
   const responsive = {
@@ -25,9 +24,9 @@ function Banner() {
       <div className='w-full '>
         <Carousel autoPlay={true} infinite={true} arrows={false} showDots={true} responsive={responsive}>
           {[1, 2, 3].map((i) => (
-            <Link key={i} to='#'>
+            <div key={i}>
               <img src={`./banners/${i}.jpg`} alt='' />
-            </Link>
+            </div>
           ))}
         </Carousel>
       </div>
