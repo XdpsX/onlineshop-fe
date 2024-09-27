@@ -4,12 +4,15 @@ import { formatPrice } from '../../utils/helper'
 import { FaCartPlus } from 'react-icons/fa'
 
 function ProductList({ products }: { products: Product[] | undefined }) {
+  if (products?.length === 0) {
+    return <div className='min-h-[360px] text-center text-xl text-gray-900 font-bold'>Không tìm thấy sản phẩm</div>
+  }
   return (
     <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-6 md:gap-8'>
       {products?.map((prod) => (
         <div
           key={prod.id}
-          className='border space-y-4 group transition-all duration-500 shadow-sm hover:shadow-md hover:-mt-3'
+          className='border space-y-4 group transition-all duration-500 shadow-sm hover:shadow-md hover:-translate-y-4'
         >
           <div className='relative overflow-hidden'>
             {prod.discountPercent > 0 && (

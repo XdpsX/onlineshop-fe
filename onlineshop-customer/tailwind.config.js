@@ -8,7 +8,10 @@ export default {
     extend: {},
     fontFamily: {
       'roboto': ['Roboto', 'sans-serif']
-    }
+    },
+    backgroundImage: {
+      'shop-banner': "url('./banners/1.jpg')",
+    },
   },
   plugins: [],
 }

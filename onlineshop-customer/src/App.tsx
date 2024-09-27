@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import { fetchUserProfile } from './features/user/userThunk'
 import { removeProfile, selectUser } from './features/user/userSlice'
 import Loading from './components/ui/Loading'
+import ProductsByCategory from './pages/ProductsByCategory'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />
+      },
+      {
+        path: '/categories/:slug',
+        element: <ProductsByCategory />
       }
     ]
   },

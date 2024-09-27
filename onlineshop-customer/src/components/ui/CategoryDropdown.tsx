@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import api from '../../services/api'
 import { FaList, FaChevronDown, FaChevronUp } from 'react-icons/fa'
@@ -21,6 +21,20 @@ function CategoryDropdown() {
 
   const [showCategories, setShowCategories] = useState(true)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
+
+  const handleResize = () => {
+    if (window.innerWidth > 768) {
+      setShowCategories(true)
+    } else {
+      setShowCategories(false)
+    }
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   if (isLoading) {
     return (

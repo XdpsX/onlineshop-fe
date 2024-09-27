@@ -5,13 +5,13 @@ import LatestProducts from '../components/ui/LatestProducts'
 
 function Home() {
   return (
-    <div className='bg-white space-y-10 mb-20'>
+    <div className='max-w-[1200px] mx-auto space-y-10 mb-20'>
       {/* BANNER & CATEGORIES */}
       <div className='flex flex-wrap'>
-        <div className='w-full md:w-1/5'>
+        <div className='w-full md:w-1/4 lg:w-1/5'>
           <CategoryDropdown />
         </div>
-        <div className='w-full md:w-4/5'>
+        <div className='w-full md:w-3/4 lg:w-4/5'>
           <Banner />
         </div>
       </div>
