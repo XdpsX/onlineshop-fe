@@ -3,13 +3,14 @@ import { FaCartShopping } from 'react-icons/fa6'
 import DropdownUser from './DropdownUser'
 import { useAppSelector } from '../../app/hooks'
 import { selectUser } from '../../features/user/userSlice'
+import { selectCart } from '../../features/cart/cartSlice'
 
 const Header = () => {
   const { profile } = useAppSelector(selectUser)
-  const wishlist_count = 3
+  const { totalItems } = useAppSelector(selectCart)
 
   return (
-    <div className='w-full bg-slate-200'>
+    <div className='w-full bg-slate-200 sticky top-0 z-50'>
       <div className='max-w-[1200px] mx-auto px-6 py-2'>
         <div className=' flex items-center justify-between md:justify-normal'>
           {/* LOGO */}
@@ -31,14 +32,19 @@ const Header = () => {
             </div>
 
             <div className='flex justify-center gap-6 md:gap-8'>
-              <div className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'>
+              <Link
+                to='/cart'
+                className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'
+              >
                 <span className='text-xl '>
                   <FaCartShopping />
                 </span>
-                <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px] '>
-                  {wishlist_count}
-                </div>
-              </div>
+                {totalItems && totalItems > 0 && (
+                  <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px] '>
+                    {totalItems}
+                  </div>
+                )}
+              </Link>
               {profile ? (
                 <DropdownUser profile={profile} />
               ) : (

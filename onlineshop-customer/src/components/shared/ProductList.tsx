@@ -1,9 +1,23 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Product } from '../../models/product/product.type'
 import { formatPrice } from '../../utils/helper'
 import { FaCartPlus } from 'react-icons/fa'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { selectAuth } from '../../features/auth/authSlice'
+import { addToCart } from '../../features/cart/cartThunk'
 
 function ProductList({ products }: { products: Product[] | undefined }) {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { accessToken } = useAppSelector(selectAuth)
+
+  const handleAddToCart = (productId: number) => {
+    if (!accessToken) {
+      navigate('/login')
+    } else {
+      dispatch(addToCart({ productId, quantity: 1 }))
+    }
+  }
   if (products?.length === 0) {
     return <div className='min-h-[360px] text-center text-xl text-gray-900 font-bold'>Không tìm thấy sản phẩm</div>
   }
@@ -44,9 +58,12 @@ function ProductList({ products }: { products: Product[] | undefined }) {
               ) : (
                 <span className='text-md font-semibold'>{formatPrice(prod.price)}</span>
               )}
-              <div className='w-10 h-10 cursor-pointer flex justify-center items-center rounded-full shadow-md border bg-yellow-500 text-white hover:bg-transparent hover:text-yellow-500 hover:border-yellow-500 transition-all'>
+              <button
+                onClick={() => handleAddToCart(prod.id)}
+                className='w-10 h-10 cursor-pointer flex justify-center items-center rounded-full shadow-md border bg-yellow-500 text-white hover:bg-transparent hover:text-yellow-500 hover:border-yellow-500 transition-all'
+              >
                 <FaCartPlus />
-              </div>
+              </button>
             </div>
           </div>
         </div>

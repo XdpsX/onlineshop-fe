@@ -30,7 +30,7 @@ api.interceptors.response.use(
     if (response && response.status === 401) {
       const accessToken = localStorage.getItem('accessToken')
       if (accessToken) {
-        // LOGOUT
+        localStorage.removeItem('accessToken')
       }
     }
     return Promise.reject(error)

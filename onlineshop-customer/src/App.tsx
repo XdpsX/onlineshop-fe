@@ -11,6 +11,10 @@ import { fetchUserProfile } from './features/user/userThunk'
 import { removeProfile, selectUser } from './features/user/userSlice'
 import Loading from './components/ui/Loading'
 import ProductsByCategory from './pages/ProductsByCategory'
+import { fetchNumberCartItems } from './features/cart/cartThunk'
+import { removeTotalItems, selectCart } from './features/cart/cartSlice'
+import Cart from './pages/Cart'
+import ProtectedRoute from './components/shared/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +29,14 @@ const router = createBrowserRouter([
       {
         path: '/categories/:slug',
         element: <ProductsByCategory />
+      },
+      {
+        path: '/cart',
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        )
       }
     ]
   },
@@ -43,16 +55,20 @@ function App() {
   const {
     loading: { fetchUserProfile: isLoadingProfile }
   } = useAppSelector(selectUser)
+  const {
+    loading: { fetchNumberCartItems: isLoadingCart }
+  } = useAppSelector(selectCart)
 
   useEffect(() => {
     if (accessToken) {
-      dispatch(fetchUserProfile())
+      Promise.all([dispatch(fetchUserProfile()), dispatch(fetchNumberCartItems())])
     } else {
       dispatch(removeProfile())
+      dispatch(removeTotalItems())
     }
   }, [dispatch, accessToken])
 
-  if (isLoadingProfile) {
+  if (isLoadingProfile || isLoadingCart) {
     return (
       <div className='h-screen'>
         <Loading size='large' />
