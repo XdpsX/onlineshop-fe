@@ -15,6 +15,7 @@ import { fetchNumberCartItems } from './features/cart/cartThunk'
 import { removeTotalItems, selectCart } from './features/cart/cartSlice'
 import Cart from './pages/Cart'
 import ProtectedRoute from './components/shared/ProtectedRoute'
+import ProductDetailsPage from './pages/ProductDetailsPage'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/categories/:slug',
         element: <ProductsByCategory />
+      },
+      {
+        path: '/products/details/:slug',
+        element: <ProductDetailsPage />
       },
       {
         path: '/cart',
