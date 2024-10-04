@@ -34,8 +34,8 @@ function Login() {
   } = useForm<LoginRequest>({
     resolver: yupResolver(schema),
     defaultValues: {
-      email: 'nam@email.com',
-      password: 'nam12345'
+      email: 'admina@email.com',
+      password: '12345678'
     }
   })
 

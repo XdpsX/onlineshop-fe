@@ -69,9 +69,10 @@ function CategoryProducts({ categoryId }: { categoryId: number }) {
               className='p-1 border outline-0 text-slate-600 font-semibold'
               name='sort'
               id='sort'
+              value={sort || '-date'}
             >
               {sortOptions.map((opt) => (
-                <option key={opt.value} value={opt.value} selected={sort === opt.value}>
+                <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>
               ))}

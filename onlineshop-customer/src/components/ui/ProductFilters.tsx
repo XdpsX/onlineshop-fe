@@ -114,7 +114,10 @@ function ProductFilters({ categoryId }: { categoryId: number }) {
                     {children}
                   </div>
                 )}
-                renderThumb={({ props }) => <div className='w-[15px] h-[15px] bg-blue-500 rounded-full' {...props} />}
+                renderThumb={({ props }) => {
+                  const { key, ...restProps } = props // Destructure to remove key
+                  return <div key={key} className='w-[15px] h-[15px] bg-blue-500 rounded-full' {...restProps} />
+                }}
               />
               <div>
                 <span className='text-slate-800 font-bold text-lg'>

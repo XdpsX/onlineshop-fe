@@ -4,18 +4,13 @@ import Home from './pages/Home'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Error from './pages/Error'
-import { useAppDispatch, useAppSelector } from './app/hooks'
-import { selectAuth } from './features/auth/authSlice'
-import { useEffect } from 'react'
-import { fetchUserProfile } from './features/user/userThunk'
-import { removeProfile, selectUser } from './features/user/userSlice'
-import Loading from './components/ui/Loading'
 import ProductsByCategory from './pages/ProductsByCategory'
-import { fetchNumberCartItems } from './features/cart/cartThunk'
-import { removeTotalItems, selectCart } from './features/cart/cartSlice'
 import Cart from './pages/Cart'
 import ProtectedRoute from './components/shared/ProtectedRoute'
 import ProductDetailsPage from './pages/ProductDetailsPage'
+import Shipping from './pages/Shipping'
+import PaymentRedirect from './pages/PaymentRedirect'
+import PaymentError from './pages/PaymentError'
 
 const router = createBrowserRouter([
   {
@@ -42,6 +37,23 @@ const router = createBrowserRouter([
             <Cart />
           </ProtectedRoute>
         )
+      },
+      {
+        path: '/shipping',
+        element: (
+          <ProtectedRoute>
+            <Shipping />
+          </ProtectedRoute>
+        )
+      },
+
+      {
+        path: '/payments/error',
+        element: (
+          <ProtectedRoute>
+            <PaymentError />
+          </ProtectedRoute>
+        )
       }
     ]
   },
@@ -52,34 +64,17 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />
+  },
+  {
+    path: '/payments/:orderId/redirect',
+    element: (
+      <ProtectedRoute>
+        <PaymentRedirect />
+      </ProtectedRoute>
+    )
   }
 ])
 function App() {
-  const dispatch = useAppDispatch()
-  const { accessToken } = useAppSelector(selectAuth)
-  const {
-    loading: { fetchUserProfile: isLoadingProfile }
-  } = useAppSelector(selectUser)
-  const {
-    loading: { fetchNumberCartItems: isLoadingCart }
-  } = useAppSelector(selectCart)
-
-  useEffect(() => {
-    if (accessToken) {
-      Promise.all([dispatch(fetchUserProfile()), dispatch(fetchNumberCartItems())])
-    } else {
-      dispatch(removeProfile())
-      dispatch(removeTotalItems())
-    }
-  }, [dispatch, accessToken])
-
-  if (isLoadingProfile || isLoadingCart) {
-    return (
-      <div className='h-screen'>
-        <Loading size='large' />
-      </div>
-    )
-  }
   return <RouterProvider router={router} />
 }
 

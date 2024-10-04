@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import Loading from '../components/ui/Loading'
 import { selectCart } from '../features/cart/cartSlice'
@@ -6,8 +6,10 @@ import { useEffect } from 'react'
 import { fetchCart } from '../features/cart/cartThunk'
 import { CartItem } from '../models/cart/cartItem.type'
 import Item from '../components/ui/CartItem'
+import { formatPrice } from '../utils/helper'
 
 function Cart() {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const {
     cartItems,
@@ -18,6 +20,12 @@ function Cart() {
     dispatch(fetchCart())
   }, [dispatch])
 
+  const redirect = (items: CartItem[], totalQuantity: number, totalAmount: number) => {
+    navigate('/shipping', {
+      state: { items, totalQuantity, totalAmount }
+    })
+  }
+
   if (isLoading) {
     return (
       <div className='text-center h-screen'>
@@ -27,7 +35,6 @@ function Cart() {
   }
 
   if (!cartItems) {
-    console.error('Something wrong with cartItems')
     return
   }
 
@@ -42,12 +49,18 @@ function Cart() {
     }
   })
   const totalQuantity = inStockCart.reduce((total, item) => total + item.quantity, 0)
-  console.log(inStockCart)
+  const totalAmount = inStockCart.reduce((total, item) => {
+    if (item.product.discountPercent > 0) {
+      return total + item.quantity * item.product.discountedPrice
+    } else {
+      return total + item.quantity * item.product.price
+    }
+  }, 0)
   return (
     <section className='bg-gray-100 '>
       <div className='w-[85%] lg:w-[90%] md:w-[90%] sm:w-[90%] mx-auto py-16 space-y-20'>
         {inStockCart.length > 0 ? (
-          <div className='flex flex-wrap space-y-4'>
+          <div className='flex flex-wrap space-y-4 md:space-y-0'>
             <div className='md:w-[67%] w-full'>
               <div className='flex flex-col gap-3'>
                 <div className='bg-white p-4'>
@@ -66,35 +79,25 @@ function Cart() {
               <div className='md:pl-3 pl-0'>
                 {inStockCart.length > 0 && (
                   <div className='bg-white p-3 text-slate-600 flex flex-col gap-3'>
-                    <h2 className='text-xl font-bold'>Order Summary</h2>
+                    <h2 className='text-xl font-bold'>Thông tin đơn hàng</h2>
                     <div className='flex justify-between items-center'>
-                      <span>{totalQuantity} Items </span>
-                      <span>$1000000 </span>
+                      <span>{totalQuantity} Sản phẩm </span>
+                      <span>{formatPrice(totalAmount)} </span>
                     </div>
                     <div className='flex justify-between items-center'>
-                      <span>Shipping Fee </span>
-                      <span>$20 </span>
-                    </div>
-                    <div className='flex gap-2'>
-                      <input
-                        className='w-full px-3 py-2 border border-slate-200 outline-0 focus:border-green-500 rounded-sm'
-                        type='text'
-                        placeholder='Input Vauchar Coupon'
-                      />
-                      <button className='px-5 py-[1px] bg-[#059473] text-white rounded-sm uppercase text-sm'>
-                        Apply
-                      </button>
+                      <span>Phí ship</span>
+                      <span>{formatPrice(0)} </span>
                     </div>
 
                     <div className='flex justify-between items-center'>
-                      <span>Total</span>
-                      <span className='text-lg text-[#059473]'>$4343 </span>
+                      <span>Tổng</span>
+                      <span className='text-lg font-bold text-green-500'>{formatPrice(totalAmount)} </span>
                     </div>
                     <button
-                      // onClick={redirect}
-                      className='px-5 py-[6px] rounded-sm hover:shadow-red-500/50 hover:shadow-lg bg-red-500 text-sm text-white uppercase '
+                      onClick={redirect.bind(null, inStockCart, totalQuantity, totalAmount)}
+                      className='px-5 py-[6px] rounded-sm hover:shadow-yellow-500/50 hover:shadow-lg bg-yellow-500 text-sm text-white uppercase '
                     >
-                      Process to Checkout
+                      Đặt hàng
                     </button>
                   </div>
                 )}
