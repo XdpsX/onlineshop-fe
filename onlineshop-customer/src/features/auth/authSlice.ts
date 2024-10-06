@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { loginThunk, registerThunk } from './authThunk'
 import { toast } from 'react-toastify'
-import { RootState } from '../../app/store'
 
-interface AuthState {
+export interface AuthState {
   accessToken: string | null
   loading: {
     login: boolean
@@ -58,6 +57,6 @@ export const authSlice = createSlice({
 })
 
 export const { logout } = authSlice.actions
-export const selectAuth = (state: RootState) => state.auth
+
 const authReducer = authSlice.reducer
 export default authReducer

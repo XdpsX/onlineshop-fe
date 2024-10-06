@@ -14,3 +14,7 @@ export const formatPrice = (price: number) => {
     maximumFractionDigits: 0
   }).format(price)
 }
+
+export const formatDateTime = (date: string) => {
+  return new Date(date).toLocaleString('vi-VN')
+}

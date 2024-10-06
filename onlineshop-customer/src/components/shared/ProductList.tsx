@@ -3,8 +3,8 @@ import { Product } from '../../models/product/product.type'
 import { formatPrice } from '../../utils/helper'
 import { FaCartPlus } from 'react-icons/fa'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectAuth } from '../../features/auth/authSlice'
 import { addToCart } from '../../features/cart/cartThunk'
+import { selectAuth } from '../../features/auth/authSelect'
 
 function ProductList({ products }: { products: Product[] | undefined }) {
   const navigate = useNavigate()

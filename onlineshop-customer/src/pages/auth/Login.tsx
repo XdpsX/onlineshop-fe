@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectAuth } from '../../features/auth/authSlice'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
@@ -10,6 +9,7 @@ import { toast } from 'react-toastify'
 import GOOGLE_ICON from '../../assets/icons/google.svg'
 import FACEBOOK_ICON from '../../assets/icons/facebook.svg'
 import Loading from '../../components/ui/Loading'
+import { selectAuth } from '../../features/auth/authSelect'
 
 const schema = yup.object().shape({
   email: yup

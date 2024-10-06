@@ -11,7 +11,13 @@ import ProductDetailsPage from './pages/ProductDetailsPage'
 import Shipping from './pages/Shipping'
 import PaymentRedirect from './pages/PaymentRedirect'
 import PaymentError from './pages/PaymentError'
+import Orders from './pages/Orders'
+import OrderDetailsPage from './pages/OrderDetailsPage'
+import { injectStore } from './services/api'
+import { store } from './app/store'
+import { logout } from './features/auth/authSlice'
 
+injectStore(store, logout)
 const router = createBrowserRouter([
   {
     path: '/',
@@ -46,7 +52,22 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-
+      {
+        path: '/orders',
+        element: (
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/orders/details/:code',
+        element: (
+          <ProtectedRoute>
+            <OrderDetailsPage />
+          </ProtectedRoute>
+        )
+      },
       {
         path: '/payments/error',
         element: (

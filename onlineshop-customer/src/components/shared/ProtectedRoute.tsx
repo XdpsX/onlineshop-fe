@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
-import { selectAuth } from '../../features/auth/authSlice'
+import { selectAuth } from '../../features/auth/authSelect'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { accessToken } = useAppSelector(selectAuth)

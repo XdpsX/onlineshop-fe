@@ -2,13 +2,13 @@ import { Outlet } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectAuth } from '../../features/auth/authSlice'
 import { removeProfile, selectUser } from '../../features/user/userSlice'
 import { removeTotalItems, selectCart } from '../../features/cart/cartSlice'
 import { useEffect } from 'react'
 import { fetchUserProfile } from '../../features/user/userThunk'
 import { fetchNumberCartItems } from '../../features/cart/cartThunk'
 import Loading from '../ui/Loading'
+import { selectAuth } from '../../features/auth/authSelect'
 
 function MainLayout() {
   const dispatch = useAppDispatch()

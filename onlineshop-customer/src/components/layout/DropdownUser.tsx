@@ -3,9 +3,10 @@ import ClickOutside from '../shared/ClickOutside'
 import { useAppDispatch } from '../../app/hooks'
 import { logout } from '../../features/auth/authSlice'
 import { toast } from 'react-toastify'
-import { FaAngleDown, FaSignOutAlt } from 'react-icons/fa'
+import { FaAngleDown, FaSignOutAlt, FaBox } from 'react-icons/fa'
 import USER_AVATAR from '~/assets/images/default-user-icon.png'
 import { UserProfile } from '../../models/user/profile.type'
+import { Link } from 'react-router-dom'
 
 const DropdownUser = ({ profile }: { profile: UserProfile }) => {
   const dispatch = useAppDispatch()
@@ -28,8 +29,15 @@ const DropdownUser = ({ profile }: { profile: UserProfile }) => {
 
       {dropdownOpen && (
         <div
-          className={`absolute z-[99] right-0 mt-4 flex w-48 flex-col rounded-sm border border-stroke bg-white shadow-sm`}
+          className={`absolute z-[99<FaBox />] right-0 mt-4 flex w-48 flex-col rounded-sm border border-stroke bg-white shadow-sm`}
         >
+          <Link
+            to='/orders'
+            className='flex items-center gap-3 px-6 py-4 text-md font-medium duration-300 ease-in-out hover:text-blue-600 lg:text-base'
+          >
+            <FaBox />
+            Đơn hàng
+          </Link>
           <button
             onClick={handleLogout}
             className='flex items-center gap-3 px-6 py-4 text-md font-medium duration-300 ease-in-out hover:text-blue-600 lg:text-base'

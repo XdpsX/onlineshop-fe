@@ -1,4 +1,14 @@
 import axios from 'axios'
+import { StoreType } from '../app/store'
+import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
+
+let store: StoreType
+let logout: ActionCreatorWithoutPayload<'auth/logout'>
+
+export const injectStore = (_store: StoreType, _logout: ActionCreatorWithoutPayload<'auth/logout'>) => {
+  store = _store
+  logout = _logout
+}
 
 const api = axios.create({
   baseURL: 'http://localhost:8080',
@@ -30,7 +40,7 @@ api.interceptors.response.use(
     if (response && response.status === 401) {
       const accessToken = localStorage.getItem('accessToken')
       if (accessToken) {
-        localStorage.removeItem('accessToken')
+        store.dispatch(logout())
       }
     }
     return Promise.reject(error)
