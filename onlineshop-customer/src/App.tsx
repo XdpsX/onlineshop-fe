@@ -16,6 +16,7 @@ import OrderDetailsPage from './pages/OrderDetailsPage'
 import { injectStore } from './services/api'
 import { store } from './app/store'
 import { logout } from './features/auth/authSlice'
+import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler'
 
 injectStore(store, logout)
 const router = createBrowserRouter([
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
         <PaymentRedirect />
       </ProtectedRoute>
     )
+  },
+  {
+    path: '/oauth2/redirect',
+    element: <OAuth2RedirectHandler />
   }
 ])
 function App() {

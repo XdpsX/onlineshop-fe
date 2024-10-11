@@ -10,6 +10,7 @@ import GOOGLE_ICON from '../../assets/icons/google.svg'
 import FACEBOOK_ICON from '../../assets/icons/facebook.svg'
 import Loading from '../../components/ui/Loading'
 import { selectAuth } from '../../features/auth/authSelect'
+import { API_BASE_URL } from '../../constants'
 
 const schema = yup.object().shape({
   email: yup
@@ -140,7 +141,7 @@ function Login() {
 
             <div className='mt-4 grid grid-cols-2 gap-4'>
               <Link
-                to='#'
+                to={`${API_BASE_URL}/oauth2/authorization/google`}
                 className='flex w-full items-center justify-center gap-3 rounded-md border border-slate-500 bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50'
               >
                 <img src={GOOGLE_ICON} alt='' className='h-6' />

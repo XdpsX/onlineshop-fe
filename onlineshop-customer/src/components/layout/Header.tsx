@@ -39,11 +39,11 @@ const Header = () => {
                 <span className='text-xl '>
                   <FaCartShopping />
                 </span>
-                {totalItems && totalItems > 0 && (
+                {totalItems && totalItems > 0 ? (
                   <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px] '>
                     {totalItems}
                   </div>
-                )}
+                ) : null}
               </Link>
               {profile ? (
                 <DropdownUser profile={profile} />
@@ -52,7 +52,6 @@ const Header = () => {
                   <Link
                     className='cursor-pointer font-bold text-black transition-colors hover:text-gray-600'
                     to='/login'
-                    target='_blank'
                   >
                     Đăng nhập
                   </Link>
@@ -60,7 +59,6 @@ const Header = () => {
                   <Link
                     className='cursor-pointer font-bold text-black transition-colors hover:text-gray-600'
                     to='/register'
-                    target='_blank'
                   >
                     Đăng kí
                   </Link>
