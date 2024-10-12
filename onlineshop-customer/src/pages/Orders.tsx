@@ -3,13 +3,14 @@ import { Page } from '../models/page.type'
 import { Order } from '../models/order/order.type'
 import api from '../services/api'
 import Loading from '../components/ui/Loading'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { formatDateTime } from '../utils/helper'
-import { useState } from 'react'
 import Pagination from '../components/shared/Pagination'
 
 function Orders() {
-  const [pageNum, setPageNum] = useState(1)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const pageNum = parseInt(searchParams.get('pageNum') || '1')
+
   const {
     isLoading,
     isError,
@@ -18,14 +19,14 @@ function Orders() {
   } = useQuery({
     queryKey: ['fetchMyOrders', pageNum],
     queryFn: async (): Promise<Page<Order>> => {
-      const res = await api.get(`/orders/me?page=${pageNum}`)
+      const res = await api.get(`/orders/me?pageNum=${pageNum}`)
       return res.data
     },
     retry: 2
   })
 
   const onPageChange = (pageNum: number) => {
-    setPageNum(pageNum)
+    setSearchParams({ pageNum: pageNum.toString() })
   }
 
   if (isLoading) {
