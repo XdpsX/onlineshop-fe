@@ -79,7 +79,7 @@ function App() {
           }
         />
         <Route
-          path='/products/edit'
+          path='/products/edit/:id'
           element={
             <>
               <PageTitle title='Sửa sản phẩm | OnlineShop' />

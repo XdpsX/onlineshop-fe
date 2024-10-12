@@ -129,7 +129,7 @@ interface ProductState {
     updateProduct: boolean
     deleteProduct: boolean
   }
-  prodToEdit?: ProductDetails
+  prodToEdit: ProductDetails | null
   detailId?: number
   productDetail?: ProductDetails
   deleteId?: number
@@ -154,6 +154,7 @@ const initialState: ProductState = {
   isLoading: false,
   error: null,
   isChecking: false,
+  prodToEdit: null,
   exists: {
     slugExists: false
   },
@@ -239,10 +240,15 @@ const productSlice = createSlice({
       })
       .addCase(getProductById.fulfilled, (state, action) => {
         state.loading.getProductById = false
-        if (state.editId) {
-          state.prodToEdit = action.payload
-        } else if (state.detailId) {
+        // if (state.editId) {
+        //   state.prodToEdit = action.payload
+        // } else if (state.detailId) {
+        //   state.productDetail = action.payload
+        // }
+        if (state.detailId) {
           state.productDetail = action.payload
+        } else {
+          state.prodToEdit = action.payload
         }
       })
       .addCase(getProductById.rejected, (state, action) => {

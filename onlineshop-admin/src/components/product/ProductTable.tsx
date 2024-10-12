@@ -4,7 +4,7 @@ import { FaEdit, FaTrash, FaFileAlt } from 'react-icons/fa'
 import { formatPrice } from '~/utils/helper'
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 import { useAppDispatch } from '~/store'
-import { publishProduct, setDeleteId, setDetailId, setEditId } from '~/store/features/productSlice'
+import { publishProduct, setDeleteId, setDetailId } from '~/store/features/productSlice'
 import { useNavigate } from 'react-router-dom'
 
 const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | null }) => {
@@ -19,8 +19,8 @@ const ProductTable = ({ productPage }: { productPage: PageResponse<Product> | nu
   }
 
   const onEdit = (productId: number) => {
-    dispatch(setEditId(productId))
-    navigate('/products/edit')
+    // dispatch(setEditId(productId))
+    navigate(`/products/edit/${productId}`)
   }
 
   if (products.length === 0) {

@@ -85,7 +85,7 @@ const ProductDetailsModal = () => {
   ]
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className='md:min-w-[620px] min-w-[310px]'>
+      <div className='md:min-w-[620px] min-w-[310px] max-w-[680px]'>
         <h1 className='font-bold text-2xl mb-2'>Chi tiết sản phẩm</h1>
         <Tabs tabs={tabs} />
         <div className='mt-5 border-t pt-2 px-6 text-right'>
