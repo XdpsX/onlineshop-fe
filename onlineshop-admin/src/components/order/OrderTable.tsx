@@ -1,3 +1,5 @@
+import { FaFileAlt } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '~/store'
 import { selectOrder, updateOrderStatus } from '~/store/features/orderSlice'
 import { Order } from '~/types/order'
@@ -72,6 +74,17 @@ function OrderTable({ orders, pageNum, pageSize }: { orders: Order[]; pageNum: n
                     </td>
                     <td scope='row' className='py-1 px-4 whitespace-nowrap'>
                       {formatDateTime(order.createdAt)}
+                    </td>
+                    <td scope='row' className='py-1 px-4 whitespace-nowrap'>
+                      <div className='flex items-center justify-center gap-2 text-white'>
+                        <Link
+                          to={`/orders/${order.id}`}
+                          title='Chi tiết'
+                          className='p-2.5 bg-blue-500 rounded hover:shadow-lg hover:shadow-blue-500/50'
+                        >
+                          <FaFileAlt />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 ))}

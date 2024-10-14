@@ -4,6 +4,7 @@ import MainLayout from './layouts/MainLayout'
 import { Route, Routes } from 'react-router-dom'
 import { Brands, Categories, CreateProduct, Dashboard, EditProduct, LoginPage, Orders, Products } from './pages'
 import ProtectedRoute from './components/layout/ProtectedRoute'
+import OrderDetailsPage from './pages/OrderDetailsPage'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -93,6 +94,15 @@ function App() {
             <>
               <PageTitle title='Đơn hàng | OnlineShop' />
               <Orders />
+            </>
+          }
+        />
+        <Route
+          path='/orders/:id'
+          element={
+            <>
+              <PageTitle title='Đơn hàng | OnlineShop' />
+              <OrderDetailsPage />
             </>
           }
         />

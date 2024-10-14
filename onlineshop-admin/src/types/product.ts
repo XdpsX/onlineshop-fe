@@ -7,6 +7,7 @@ export type Product = {
   slug: string
   price: number
   discountPercent: number
+  discountedPrice: number
   inStock: boolean
   published: boolean
   mainImage: string
