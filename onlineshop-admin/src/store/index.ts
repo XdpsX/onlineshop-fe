@@ -5,6 +5,7 @@ import brandReducer from './features/brandSlice'
 import productReducer from './features/productSlice'
 import authReducer from './features/authSlice'
 import userReducer from './features/userSlice'
+import orderReducer from './features/orderSlice'
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
     brand: brandReducer,
     product: productReducer,
     auth: authReducer,
-    user: userReducer
+    user: userReducer,
+    order: orderReducer
   }
 })
 

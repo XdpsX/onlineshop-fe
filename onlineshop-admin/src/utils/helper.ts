@@ -85,3 +85,7 @@ export const getRoleFromToken = (token: string) => {
     return ''
   }
 }
+
+export const formatDateTime = (date: string) => {
+  return new Date(date).toLocaleString('vi-VN')
+}

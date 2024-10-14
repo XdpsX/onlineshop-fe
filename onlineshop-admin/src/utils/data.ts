@@ -22,3 +22,44 @@ export const sortOptions = [
 ]
 
 export const DEFAULT_SORT = '-date'
+
+export const PAYMENT_STATUS = [
+  {
+    id: 1,
+    title: 'Unpaid',
+    value: 'UNPAID'
+  },
+  {
+    id: 2,
+    title: 'Paid',
+    value: 'PAID'
+  }
+]
+
+export const ORDER_STATUS = [
+  {
+    id: 1,
+    title: 'Pending',
+    value: 'PENDING'
+  },
+  {
+    id: 2,
+    title: 'Processing',
+    value: 'PROCESSING'
+  },
+  {
+    id: 3,
+    title: 'Shipped',
+    value: 'SHIPPED'
+  },
+  {
+    id: 4,
+    title: 'Delivered',
+    value: 'DELIVERED'
+  },
+  {
+    id: 5,
+    title: 'Cancelled',
+    value: 'CANCELLED'
+  }
+]

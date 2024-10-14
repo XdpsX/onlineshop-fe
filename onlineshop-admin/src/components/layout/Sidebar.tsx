@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { FaArrowLeft, FaListUl, FaHandHolding, FaProductHunt, FaAngleUp, FaAngleDown } from 'react-icons/fa'
+import { FaArrowLeft, FaListUl, FaHandHolding, FaProductHunt, FaAngleUp, FaAngleDown, FaBox } from 'react-icons/fa'
 import Logo from '~/assets/logo.png'
 import SidebarLinkGroup from './SidebarLinkGroup'
 
@@ -110,7 +110,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </NavLink>
             </li>
             {/* <!-- Menu Item Brand --> */}
-            {/* <!-- Menu Item Forms --> */}
+            {/* <!-- Menu Item Products --> */}
             <SidebarLinkGroup activeCondition={pathname === '/products' || pathname.includes('products')}>
               {(handleClick, open) => {
                 return (
@@ -161,7 +161,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 )
               }}
             </SidebarLinkGroup>
-            {/* <!-- Menu Item Forms --> */}
+            {/* <!-- Menu Item Products --> */}
+            {/* <!-- Menu Item Order --> */}
+            <li>
+              <NavLink
+                to='/orders'
+                className={`group relative flex items-center gap-2 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-yellow-500 ${
+                  pathname.includes('orders') && 'bg-yellow-500'
+                }`}
+              >
+                <FaBox />
+                Đơn hàng
+              </NavLink>
+            </li>
+            {/* <!-- Menu Item Order --> */}
           </ul>
         </nav>
       </div>

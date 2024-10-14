@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Loader, PageTitle } from './components/common'
 import MainLayout from './layouts/MainLayout'
 import { Route, Routes } from 'react-router-dom'
-import { Brands, Categories, CreateProduct, Dashboard, EditProduct, LoginPage, Products } from './pages'
+import { Brands, Categories, CreateProduct, Dashboard, EditProduct, LoginPage, Orders, Products } from './pages'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 
 function App() {
@@ -84,6 +84,15 @@ function App() {
             <>
               <PageTitle title='Sửa sản phẩm | OnlineShop' />
               <EditProduct />
+            </>
+          }
+        />
+        <Route
+          path='/orders'
+          element={
+            <>
+              <PageTitle title='Đơn hàng | OnlineShop' />
+              <Orders />
             </>
           }
         />
